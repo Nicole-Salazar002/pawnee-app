@@ -1,33 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { obtenerAvistamientos } from "../api/avistamientosApi";
-import { Avistamiento } from "../tipos";
-
-function IconoInicio() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z" />
-    </svg>
-  );
-}
-
-function IconoOjo() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
-  );
-}
-
-function IconoMas() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
-      <circle cx="12" cy="12" r="8" />
-      <path d="M12 9v6M9 12h6" />
-    </svg>
-  );
-}
+import { NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 function IconoBuscar() {
   return (
@@ -43,17 +15,10 @@ export function Tablero() {
   const location = useLocation();
   const [parametros, setParametros] = useSearchParams();
   const [consulta, setConsulta] = useState(parametros.get("q") ?? "");
-  const [recientes, setRecientes] = useState<Avistamiento[]>([]);
 
   useEffect(() => {
     setConsulta(parametros.get("q") ?? "");
   }, [parametros]);
-
-  useEffect(() => {
-    obtenerAvistamientos()
-      .then((lista) => setRecientes(lista.slice(0, 4)))
-      .catch(() => setRecientes([]));
-  }, [location.pathname]);
 
   function manejarBusqueda(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
@@ -79,16 +44,14 @@ export function Tablero() {
 
   return (
     <div className="tablero">
-      <aside className="barra">
+      <header className="barra-superior">
         <div className="marca">
           <span className="marca-signo">P</span>
           <div>
-            <strong>PAWNEE</strong>
-            <small>Parques y fenómenos</small>
+            <strong>Pawnee</strong>
+            <small>Departamento</small>
           </div>
         </div>
-
-        <p className="chip-seccion">Registro</p>
 
         <nav className="nav" aria-label="Secciones">
           <NavLink
@@ -99,67 +62,34 @@ export function Tablero() {
               return activo ? "nav-item activo" : "nav-item";
             }}
           >
-            <IconoInicio /> Criaturas
+            Criaturas
           </NavLink>
           <NavLink to="/avistamientos" end className={({ isActive }) => (isActive ? "nav-item activo" : "nav-item")}>
-            <IconoOjo /> Avistamientos
+            Avistamientos
           </NavLink>
           <NavLink to="/criaturas/nueva" className={({ isActive }) => (isActive ? "nav-item activo" : "nav-item")}>
-            <IconoMas /> Nueva criatura
+            Nueva criatura
           </NavLink>
           <NavLink to="/avistamientos/nuevo" className={({ isActive }) => (isActive ? "nav-item activo" : "nav-item")}>
-            <IconoMas /> Nuevo avistamiento
+            Nuevo avistamiento
           </NavLink>
         </nav>
 
-        <div className="barra-pie">
-          <strong>Ayuda</strong>
-          Aquí se registran las criaturas del departamento y cada avistamiento asociado.
-        </div>
-      </aside>
+        <form className="buscador" onSubmit={manejarBusqueda}>
+          <IconoBuscar />
+          <input
+            type="search"
+            value={consulta}
+            onChange={(evento) => alEscribir(evento.target.value)}
+            placeholder="Buscar criatura"
+            aria-label="Buscar criatura"
+          />
+        </form>
+      </header>
 
-      <div className="zona">
-        <header className="cabecera">
-          <form className="buscador" onSubmit={manejarBusqueda}>
-            <IconoBuscar />
-            <input
-              type="search"
-              value={consulta}
-              onChange={(evento) => alEscribir(evento.target.value)}
-              placeholder="Buscar criatura"
-              aria-label="Buscar criatura"
-            />
-          </form>
-        </header>
-
-        <div className="rejilla">
-          <main className="principal">
-            <Outlet />
-          </main>
-          <aside className="lateral" aria-label="Avistamientos recientes">
-            <h2>Avistamientos recientes</h2>
-            {recientes.length === 0 ? (
-              <p className="vacio">Todavía no hay avistamientos para mostrar.</p>
-            ) : (
-              recientes.map((avistamiento) => (
-                <Link
-                  key={avistamiento._id}
-                  className="resumen-item"
-                  to={avistamiento.criatura?._id ? `/criaturas/${avistamiento.criatura._id}` : "/avistamientos"}
-                >
-                  <strong>{avistamiento.criatura?.nombre ?? "Criatura"}</strong>
-                  <span>
-                    {avistamiento.fecha.slice(0, 10)} · {avistamiento.testigo}
-                  </span>
-                </Link>
-              ))
-            )}
-            <NavLink to="/avistamientos" end className="boton-enlace secundario">
-              Ver todos
-            </NavLink>
-          </aside>
-        </div>
-      </div>
+      <main className="zona">
+        <Outlet />
+      </main>
     </div>
   );
 }
