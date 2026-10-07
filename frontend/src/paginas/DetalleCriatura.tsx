@@ -55,50 +55,56 @@ export function DetalleCriatura() {
     }
   }
 
-  if (cargando) return <p>Cargando...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!criatura) return <p>No se encontró la criatura.</p>;
+  if (cargando) return <p className="cargando">Cargando...</p>;
+  if (error) return <p className="aviso">Error: {error}</p>;
+  if (!criatura) return <p className="tarjeta vacio">No se encontró la criatura.</p>;
 
   return (
     <div>
-      <p>
-        <Link to="/">Volver a la lista</Link>
-      </p>
+      <section className="hero">
+        <p>
+          <Link to="/">Volver a la lista</Link>
+        </p>
+        <h1>{criatura.nombre}</h1>
+        <div className="meta">
+          <span className="pastilla">Tipo: {criatura.tipo}</span>
+          <span className="pastilla">Peligro {criatura.nivelPeligro}</span>
+          <span className="pastilla">{criatura.estado.replace(/_/g, " ")}</span>
+        </div>
+        <p>Habilidades: {criatura.habilidades.join(", ") || "ninguna registrada"}</p>
+        <div className="acciones">
+          <Link className="boton-enlace" to={`/criaturas/${criatura._id}/editar`}>
+            Editar
+          </Link>
+          <button type="button" className="boton peligro" onClick={manejarEliminar}>
+            Eliminar
+          </button>
+        </div>
+      </section>
 
-      <h1>{criatura.nombre}</h1>
-
-      <ul>
-        <li>Tipo: {criatura.tipo}</li>
-        <li>Nivel de peligro: {criatura.nivelPeligro}</li>
-        <li>Estado: {criatura.estado}</li>
-        <li>Habilidades: {criatura.habilidades.join(", ") || "(ninguna registrada)"}</li>
-      </ul>
-
-      <p>
-        <Link to={`/criaturas/${criatura._id}/editar`}>Editar</Link>
-        {" | "}
-        <button type="button" onClick={manejarEliminar}>
-          Eliminar
-        </button>
-      </p>
-
-      <h2>Avistamientos registrados</h2>
-
-      <p>
-        <Link to={`/avistamientos/nuevo?criaturaId=${criatura._id}`}>Registrar un avistamiento de esta criatura</Link>
-      </p>
+      <div className="barra-herramientas">
+        <h2>Avistamientos registrados</h2>
+        <Link className="boton-enlace" to={`/avistamientos/nuevo?criaturaId=${criatura._id}`}>
+          Registrar avistamiento
+        </Link>
+      </div>
 
       {avistamientos.length === 0 ? (
-        <p>Todavía no hay avistamientos registrados para esta criatura.</p>
+        <p className="tarjeta vacio">Todavía no hay avistamientos registrados para esta criatura.</p>
       ) : (
-        <ul>
+        <div className="lista">
           {avistamientos.map((avistamiento) => (
-            <li key={avistamiento._id}>
-              {avistamiento.fecha.slice(0, 10)} — {avistamiento.testigo} en {avistamiento.ubicacion}
-              {avistamiento.descripcion ? ` (${avistamiento.descripcion})` : ""}
-            </li>
+            <article key={avistamiento._id} className="tarjeta">
+              <strong>
+                {avistamiento.fecha.slice(0, 10)} — {avistamiento.testigo}
+              </strong>
+              <p>
+                {avistamiento.ubicacion}
+                {avistamiento.descripcion ? ` · ${avistamiento.descripcion}` : ""}
+              </p>
+            </article>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

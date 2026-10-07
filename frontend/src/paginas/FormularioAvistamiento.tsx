@@ -65,18 +65,18 @@ export function FormularioAvistamiento() {
     }
   }
 
-  if (cargando) return <p>Cargando formulario...</p>;
+  if (cargando) return <p className="cargando">Cargando formulario...</p>;
 
   return (
     <div>
       <h1>Registrar avistamiento</h1>
+      <p>Relaciona el testimonio con una criatura del archivo.</p>
 
-      {error && <p>Error: {error}</p>}
+      {error && <p className="aviso">Error: {error}</p>}
 
-      <form onSubmit={manejarEnvio}>
-        <p>
-          <label htmlFor="criatura">Criatura: </label>
-          <br />
+      <form className="formulario tarjeta" onSubmit={manejarEnvio}>
+        <div>
+          <label htmlFor="criatura">Criatura</label>
           <select
             id="criatura"
             value={form.criatura}
@@ -88,57 +88,53 @@ export function FormularioAvistamiento() {
               </option>
             ))}
           </select>
-        </p>
+        </div>
 
-        <p>
-          <label htmlFor="testigo">Testigo: </label>
-          <br />
+        <div>
+          <label htmlFor="testigo">Testigo</label>
           <input
             id="testigo"
             type="text"
             value={form.testigo}
             onChange={(e) => setForm({ ...form, testigo: e.target.value })}
           />
-        </p>
+        </div>
 
-        <p>
-          <label htmlFor="ubicacion">Ubicación: </label>
-          <br />
+        <div>
+          <label htmlFor="ubicacion">Ubicación</label>
           <input
             id="ubicacion"
             type="text"
             value={form.ubicacion}
             onChange={(e) => setForm({ ...form, ubicacion: e.target.value })}
           />
-        </p>
+        </div>
 
-        <p>
-          <label htmlFor="fecha">Fecha: </label>
-          <br />
+        <div>
+          <label htmlFor="fecha">Fecha</label>
           <input
             id="fecha"
             type="date"
             value={form.fecha}
             onChange={(e) => setForm({ ...form, fecha: e.target.value })}
           />
-        </p>
+        </div>
 
-        <p>
-          <label htmlFor="descripcion">Descripción (opcional): </label>
-          <br />
+        <div>
+          <label htmlFor="descripcion">Descripción (opcional)</label>
           <input
             id="descripcion"
             type="text"
             value={form.descripcion}
             onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
           />
-        </p>
+        </div>
 
-        <p>
-          <button type="submit" disabled={guardando}>
+        <div className="fila-acciones">
+          <button className="boton" type="submit" disabled={guardando}>
             {guardando ? "Guardando..." : "Registrar avistamiento"}
           </button>
-        </p>
+        </div>
       </form>
     </div>
   );

@@ -78,29 +78,28 @@ export function FormularioCriatura() {
     }
   }
 
-  if (cargando) return <p>Cargando datos de la criatura...</p>;
+  if (cargando) return <p className="cargando">Cargando datos de la criatura...</p>;
 
   return (
     <div>
       <h1>{esEdicion ? "Editar criatura" : "Registrar criatura nueva"}</h1>
+      <p>Completa la ficha del Departamento de Pawnee.</p>
 
-      {error && <p>Error: {error}</p>}
+      {error && <p className="aviso">Error: {error}</p>}
 
-      <form onSubmit={manejarEnvio}>
-        <p>
-          <label htmlFor="nombre">Nombre: </label>
-          <br />
+      <form className="formulario tarjeta" onSubmit={manejarEnvio}>
+        <div>
+          <label htmlFor="nombre">Nombre</label>
           <input
             id="nombre"
             type="text"
             value={form.nombre}
             onChange={(e) => setForm({ ...form, nombre: e.target.value })}
           />
-        </p>
+        </div>
 
-        <p>
-          <label htmlFor="tipo">Tipo: </label>
-          <br />
+        <div>
+          <label htmlFor="tipo">Tipo</label>
           <select
             id="tipo"
             value={form.tipo}
@@ -112,22 +111,20 @@ export function FormularioCriatura() {
               </option>
             ))}
           </select>
-        </p>
+        </div>
 
-        <p>
-          <label htmlFor="habilidades">Habilidades (separadas por comas): </label>
-          <br />
+        <div>
+          <label htmlFor="habilidades">Habilidades (separadas por comas)</label>
           <input
             id="habilidades"
             type="text"
             value={habilidadesTexto}
             onChange={(e) => setHabilidadesTexto(e.target.value)}
           />
-        </p>
+        </div>
 
-        <p>
-          <label htmlFor="nivelPeligro">Nivel de peligro (1-10): </label>
-          <br />
+        <div>
+          <label htmlFor="nivelPeligro">Nivel de peligro (1-10)</label>
           <input
             id="nivelPeligro"
             type="number"
@@ -136,11 +133,10 @@ export function FormularioCriatura() {
             value={form.nivelPeligro}
             onChange={(e) => setForm({ ...form, nivelPeligro: Number(e.target.value) })}
           />
-        </p>
+        </div>
 
-        <p>
-          <label htmlFor="estado">Estado: </label>
-          <br />
+        <div>
+          <label htmlFor="estado">Estado</label>
           <select
             id="estado"
             value={form.estado}
@@ -152,13 +148,13 @@ export function FormularioCriatura() {
               </option>
             ))}
           </select>
-        </p>
+        </div>
 
-        <p>
-          <button type="submit" disabled={guardando}>
+        <div className="fila-acciones">
+          <button className="boton" type="submit" disabled={guardando}>
             {guardando ? "Guardando..." : esEdicion ? "Guardar cambios" : "Crear criatura"}
           </button>
-        </p>
+        </div>
       </form>
     </div>
   );

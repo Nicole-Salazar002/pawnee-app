@@ -5,6 +5,7 @@
  */
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Tablero } from "./componentes/Tablero";
 import { ListaCriaturas } from "./paginas/ListaCriaturas";
 import { DetalleCriatura } from "./paginas/DetalleCriatura";
 import { FormularioCriatura } from "./paginas/FormularioCriatura";
@@ -15,12 +16,14 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ListaCriaturas />} />
-        <Route path="/criaturas/nueva" element={<FormularioCriatura />} />
-        <Route path="/criaturas/:id" element={<DetalleCriatura />} />
-        <Route path="/criaturas/:id/editar" element={<FormularioCriatura />} />
-        <Route path="/avistamientos" element={<ListaAvistamientos />} />
-        <Route path="/avistamientos/nuevo" element={<FormularioAvistamiento />} />
+        <Route element={<Tablero />}>
+          <Route path="/" element={<ListaCriaturas />} />
+          <Route path="/criaturas/nueva" element={<FormularioCriatura />} />
+          <Route path="/criaturas/:id" element={<DetalleCriatura />} />
+          <Route path="/criaturas/:id/editar" element={<FormularioCriatura />} />
+          <Route path="/avistamientos" element={<ListaAvistamientos />} />
+          <Route path="/avistamientos/nuevo" element={<FormularioAvistamiento />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
