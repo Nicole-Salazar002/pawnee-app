@@ -1,0 +1,23 @@
+{
+  "name": "api-pawnee-mongoose",
+  "version": "1.0.0",
+  "description": "API Express + Mongoose para el Departamento de Parques y Fenomenos Inexplicables de Pawnee",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "db": "node scripts/mongo-local.js",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.0",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "mongodb-memory-server": "^11.3.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}
