@@ -5,19 +5,19 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "db": "node scripts/mongo-local.js",
-    "build": "tsc",
+    "build": "node scripts/construir.js",
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "dotenv": "^16.4.0",
-    "express": "^4.19.2",
-    "mongoose": "^8.3.0"
-  },
-  "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.0",
-    "mongodb-memory-server": "^11.3.0",
-    "tsx": "^4.7.0",
+    "dotenv": "^16.4.0",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.0",
     "typescript": "^5.4.0"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^11.3.0",
+    "tsx": "^4.7.0"
   }
 }

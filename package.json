@@ -5,7 +5,7 @@
     "node": "22.x"
   },
   "scripts": {
-    "build": "npm install --include=dev --ignore-scripts --prefix api && npm run build --prefix api && npm install --include=dev --prefix frontend && npm run build --prefix frontend",
+    "build": "npm install --omit=dev --ignore-scripts --prefix api && node api/scripts/construir.js",
     "start": "node api/dist/index.js"
   }
 }

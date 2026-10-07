@@ -1,10 +1,12 @@
 services:
   - type: web
-    name: pawnee
+    name: pawnee-app
     runtime: node
     plan: free
-    rootDir: .
-    buildCommand: npm install && npm run build
+    # Sin rootDir. En el dashboard el campo Root Directory tiene que quedar
+    # vacio. Si pones "." o "api", npm no encuentra package.json y el build
+    # termina con estado 254.
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /api/salud
     envVars:
