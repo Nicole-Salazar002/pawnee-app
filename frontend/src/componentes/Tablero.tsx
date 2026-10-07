@@ -44,6 +44,12 @@ export function Tablero() {
 
   return (
     <div className="tablero">
+      <div className="atmosfera" aria-hidden="true">
+        <span className="mancha mancha-a" />
+        <span className="mancha mancha-b" />
+        <span className="mancha mancha-c" />
+        <span className="mancha mancha-d" />
+      </div>
       <header className="barra-superior">
         <div className="marca">
           <span className="marca-signo">P</span>
