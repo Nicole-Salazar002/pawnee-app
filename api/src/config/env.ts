@@ -18,7 +18,7 @@ function leerEnv(): Env {
 
   if (!mongodbUri) {
     throw new Error(
-      "Falta MONGODB_URI en tu .env. Copia .env.example a .env y completa tu URI de Atlas."
+      "Falta MONGODB_URI. En local va en el archivo .env. En Render va en Environment, no en git."
     );
   }
 

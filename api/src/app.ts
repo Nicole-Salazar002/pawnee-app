@@ -72,7 +72,11 @@ export function crearApp(): Express {
   const frontendDist = buscarFrontendDist();
   if (frontendDist) {
     app.use(express.static(frontendDist));
-    app.get("*", (_req: Request, res: Response) => {
+    app.use((req: Request, res: Response, next) => {
+      if (req.method !== "GET" && req.method !== "HEAD") {
+        next();
+        return;
+      }
       res.sendFile(path.join(frontendDist, "index.html"));
     });
   } else {

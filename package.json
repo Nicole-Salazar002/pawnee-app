@@ -1,0 +1,11 @@
+{
+  "name": "pawnee",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "build": "npm install --include=dev --ignore-scripts --prefix api && npm run build --prefix api && npm install --include=dev --prefix frontend && npm run build --prefix frontend",
+    "start": "node api/dist/index.js"
+  }
+}
